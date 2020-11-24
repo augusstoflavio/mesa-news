@@ -1,7 +1,7 @@
 package br.com.augusto.mesanews.modules.auth.data
 
 import br.com.augusto.mesanews.app.data.Result
-import br.com.augusto.mesanews.modules.auth.services.AuthService
+import br.com.augusto.mesanews.modules.auth.service.AuthService
 
 class LoginDataSource(val authService: AuthService) {
 

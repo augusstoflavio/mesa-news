@@ -1,4 +1,4 @@
-package br.com.augusto.mesanews.modules.auth.services
+package br.com.augusto.mesanews.modules.auth.service
 
 import br.com.augusto.mesanews.modules.auth.data.model.LoginResponse
 import retrofit2.Call

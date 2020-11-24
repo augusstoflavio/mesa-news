@@ -6,7 +6,7 @@ import br.com.augusto.mesanews.app.data.Preferences
 import br.com.augusto.mesanews.app.module.ModuleAbstract
 import br.com.augusto.mesanews.modules.auth.data.LoginDataSource
 import br.com.augusto.mesanews.modules.auth.data.LoginRepository
-import br.com.augusto.mesanews.modules.auth.services.AuthService
+import br.com.augusto.mesanews.modules.auth.service.AuthService
 import br.com.augusto.mesanews.modules.auth.ui.signin.SigninViewModel
 import br.com.augusto.mesanews.modules.auth.ui.signup.SignupViewModel
 import org.koin.android.viewmodel.dsl.viewModel
