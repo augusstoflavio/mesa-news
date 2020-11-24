@@ -5,7 +5,7 @@ import br.com.augusto.mesanews.modules.news.service.NewsService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import br.com.augusto.mesanews.app.data.Result
-import br.com.augusto.mesanews.modules.news.NewsResourceConverter
+import br.com.augusto.mesanews.modules.news.converter.NewsResourceConverter
 
 class NewsRepository(val newsService: NewsService) {
 

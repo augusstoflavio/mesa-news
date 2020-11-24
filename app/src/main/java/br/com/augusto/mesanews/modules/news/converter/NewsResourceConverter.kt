@@ -1,4 +1,4 @@
-package br.com.augusto.mesanews.modules.news
+package br.com.augusto.mesanews.modules.news.converter
 
 import br.com.augusto.mesanews.modules.news.data.News
 import br.com.augusto.mesanews.modules.news.data.NewsResource
