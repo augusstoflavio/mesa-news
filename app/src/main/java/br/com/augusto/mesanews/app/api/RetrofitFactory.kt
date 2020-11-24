@@ -3,6 +3,7 @@ package br.com.augusto.mesanews.app.api
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
@@ -22,7 +23,7 @@ class RetrofitFactory {
                     .addHeader("Authorization", "Bearer $token")
                     .build()
                 chain.proceed(newRequest)
-            }.build()
+            }.addInterceptor(loggingInterceptor()).build()
 
             val retrofit = builder()
                 .client(client)
@@ -37,6 +38,12 @@ class RetrofitFactory {
             return Retrofit.Builder()
                 .baseUrl("https://mesa-news-api.herokuapp.com")
                 .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
+        }
+
+        private fun loggingInterceptor(): HttpLoggingInterceptor {
+            val logging = HttpLoggingInterceptor()
+            logging.level = HttpLoggingInterceptor.Level.BODY
+            return logging
         }
     }
 }

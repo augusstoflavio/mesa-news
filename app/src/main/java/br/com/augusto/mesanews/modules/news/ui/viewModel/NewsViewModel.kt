@@ -1,5 +1,6 @@
 package br.com.augusto.mesanews.modules.news.ui.viewModel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,8 +30,10 @@ class NewsViewModel(
             val result = newsRepository.getNews(page)
             if (result is Result.Success) {
                 news.value!!.addAll(result.data)
+                news.postValue(news.value)
             }
         }
+        Log.e("s", "dasdasd")
     }
 
     private fun getHighlights() {

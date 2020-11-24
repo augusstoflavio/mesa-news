@@ -18,5 +18,5 @@ data class NewsResource (
     @field:Json(name = "url")
     val url: String,
     @field:Json(name = "imageUrl")
-    val imageUrl: String
+    val imageUrl: String?
 )

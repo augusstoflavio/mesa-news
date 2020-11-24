@@ -5,6 +5,7 @@ import br.com.augusto.mesanews.app.data.Preferences
 import br.com.augusto.mesanews.app.module.ModuleInterface
 import br.com.augusto.mesanews.modules.auth.AuthModule
 import br.com.augusto.mesanews.modules.main.MainModule
+import br.com.augusto.mesanews.modules.news.NewsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -38,7 +39,8 @@ class MainAplication : Application() {
     fun getModules(): List<ModuleInterface> {
         return listOf(
             MainModule(),
-            AuthModule()
+            AuthModule(),
+            NewsModule()
         )
     }
 }
