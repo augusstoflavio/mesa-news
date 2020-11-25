@@ -1,8 +1,8 @@
+package br.com.augusto.mesanews.modules.news.data
+
 import androidx.paging.PageKeyedDataSource
 import br.com.augusto.mesanews.app.data.resources.GetListResponse
 import br.com.augusto.mesanews.modules.news.converter.NewsResourceConverter
-import br.com.augusto.mesanews.modules.news.data.News
-import br.com.augusto.mesanews.modules.news.data.NewsResource
 import br.com.augusto.mesanews.modules.news.service.NewsService
 import retrofit2.Call
 import retrofit2.Callback

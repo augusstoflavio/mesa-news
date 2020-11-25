@@ -1,6 +1,5 @@
 package br.com.augusto.mesanews.modules.news.data
 
-import NewsDataSource
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import br.com.augusto.mesanews.modules.news.service.NewsService
