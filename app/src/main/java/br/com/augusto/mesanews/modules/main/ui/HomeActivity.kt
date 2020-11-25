@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.augusto.mesanews.R
-import br.com.augusto.mesanews.app.helper.toast
 import br.com.augusto.mesanews.app.ui.adapter.OnClickItemAdapterListener
 import br.com.augusto.mesanews.modules.news.data.News
+import br.com.augusto.mesanews.modules.news.ui.adapter.HighlightsAdapter
 import br.com.augusto.mesanews.modules.news.ui.adapter.NewsAdapter
 import br.com.augusto.mesanews.modules.news.ui.viewModel.NewsViewModel
 import kotlinx.android.synthetic.main.activity_home.*
@@ -27,6 +27,14 @@ class HomeActivity : AppCompatActivity(), OnClickItemAdapterListener<News> {
 
         viewModel.news.observe(this, {
             adapter.submitList(it)
+        })
+
+        val highlightsAdapter = HighlightsAdapter()
+        highlights.adapter = highlightsAdapter
+        highlights.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        viewModel.highliht.observe(this, {
+            highlightsAdapter.update(it)
         })
     }
 
