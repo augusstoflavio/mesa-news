@@ -6,10 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".modules.main.ui.HomeActivity">
 
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/news"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/adapter_news" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

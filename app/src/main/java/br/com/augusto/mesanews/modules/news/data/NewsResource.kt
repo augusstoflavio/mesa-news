@@ -17,6 +17,6 @@ data class NewsResource (
     val highlight: Boolean,
     @field:Json(name = "url")
     val url: String,
-    @field:Json(name = "imageUrl")
+    @field:Json(name = "image_url")
     val imageUrl: String?
 )

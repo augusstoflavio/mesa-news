@@ -33,7 +33,6 @@ class NewsViewModel(
                 news.postValue(news.value)
             }
         }
-        Log.e("s", "dasdasd")
     }
 
     private fun getHighlights() {
