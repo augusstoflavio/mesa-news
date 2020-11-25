@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.augusto.mesanews.R
+import br.com.augusto.mesanews.app.data.Result
+import br.com.augusto.mesanews.app.helper.toast
 import br.com.augusto.mesanews.app.ui.adapter.OnClickItemAdapterListener
 import br.com.augusto.mesanews.modules.news.data.News
 import br.com.augusto.mesanews.modules.news.ui.activity.ShowNewsActivity
@@ -58,11 +60,24 @@ class HomeActivity : AppCompatActivity() {
         viewModel.highliht.observe(this, {
             highlightsAdapter.update(it)
         })
+
+        viewModel.newsFavoriteUpdateResult.observe(this, {
+            if (it == null) {
+                return@observe
+            }
+
+            if (it is Result.Success) {
+                adapterNews.changeFavState(it.data)
+            } else if(it is Result.Error) {
+                toast(it.exception.message!!)
+            }
+
+            viewModel.newsFavoriteUpdateResult.value = null
+        })
     }
 
     private fun favoriteNews(item: News) {
         viewModel.favoriteNews(item)
-        adapterNews.changeFavState(item)
     }
 
     fun sharedNews(news: News) {

@@ -80,7 +80,7 @@ class NewsAdapter(
             val position = it
             if (position != null) {
                 getItem(it)?.let {
-                    it.favorite = !it.favorite
+                    it.favorite = news.favorite
                     notifyItemChanged(position)
                 }
             }

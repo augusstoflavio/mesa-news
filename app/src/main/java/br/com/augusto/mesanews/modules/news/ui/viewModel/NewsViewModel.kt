@@ -16,6 +16,7 @@ class NewsViewModel(
 
     val highliht: MutableLiveData<List<News>> = MutableLiveData(mutableListOf())
     var news: LiveData<PagedList<News>> = newsRepository.getNews()
+    var newsFavoriteUpdateResult: MutableLiveData<Result<News>> = MutableLiveData(null)
 
     init {
         refresh()
@@ -27,7 +28,7 @@ class NewsViewModel(
 
     fun favoriteNews(news: News) {
         viewModelScope.launch {
-            newsRepository.changeFavoriteSituation(news)
+            newsFavoriteUpdateResult.value = newsRepository.changeFavoriteSituation(news)
         }
     }
 

@@ -42,7 +42,7 @@ class NewsRepository(val newsService: NewsService, val newsDataSourceFactory: Ne
         }
     }
 
-    suspend fun changeFavoriteSituation(news: News) {
+    suspend fun changeFavoriteSituation(news: News): Result<News> {
         return withContext(Dispatchers.IO) {
             val realm = Database.getInstance()
             try {
@@ -71,8 +71,12 @@ class NewsRepository(val newsService: NewsService, val newsDataSourceFactory: Ne
                 }
 
                 realm.commitTransaction()
+
+                news.favorite = !news.favorite
+                return@withContext Result.Success(news)
             } catch (e: Exception) {
                 realm.cancelTransaction()
+                return@withContext Result.Error(e)
             } finally {
                 realm.close()
             }
