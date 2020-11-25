@@ -13,4 +13,8 @@ class NewsDataSourceFactory(val newsService: NewsService): DataSource.Factory<In
         newsDataSourceLiveData.postValue(newsDataSource)
         return newsDataSource
     }
+
+    fun refresh() {
+        newsDataSourceLiveData.value?.invalidate()
+    }
 }

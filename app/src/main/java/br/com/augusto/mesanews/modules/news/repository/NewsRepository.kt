@@ -22,6 +22,7 @@ class NewsRepository(val newsService: NewsService, val newsDataSourceFactory: Ne
             .setInitialLoadSizeHint(20 * 2)
             .setEnablePlaceholders(false)
             .build()
+
         return LivePagedListBuilder(newsDataSourceFactory, config).build()
     }
 
@@ -41,24 +42,33 @@ class NewsRepository(val newsService: NewsService, val newsDataSourceFactory: Ne
         }
     }
 
-    suspend fun favorite(news: News) {
+    suspend fun changeFavoriteSituation(news: News) {
         return withContext(Dispatchers.IO) {
             val realm = Database.getInstance()
             try {
                 realm.beginTransaction()
 
-                val favoriteNews = FavoriteNews()
-                favoriteNews.title = news.title
-                favoriteNews.author = news.author
-                favoriteNews.content = news.content
-                favoriteNews.description = news.description
-                favoriteNews.highlight = news.highlight
-                favoriteNews.imageUrl = news.imageUrl
-                favoriteNews.publishedAt = news.publishedAt
-                favoriteNews.url = news.url
-                realm.copyToRealmOrUpdate(
-                    favoriteNews
-                )
+                val favorites = realm.where(FavoriteNews::class.java)
+                    .equalTo("title", news.title).findAll()
+
+                if (favorites.isEmpty()) {
+                    val favoriteNews = FavoriteNews()
+                    favoriteNews.title = news.title
+                    favoriteNews.author = news.author
+                    favoriteNews.content = news.content
+                    favoriteNews.description = news.description
+                    favoriteNews.highlight = news.highlight
+                    favoriteNews.imageUrl = news.imageUrl
+                    favoriteNews.publishedAt = news.publishedAt
+                    favoriteNews.url = news.url
+                    realm.copyToRealmOrUpdate(
+                        favoriteNews
+                    )
+                } else {
+                    favorites.forEach {
+                        it.deleteFromRealm()
+                    }
+                }
 
                 realm.commitTransaction()
             } catch (e: Exception) {

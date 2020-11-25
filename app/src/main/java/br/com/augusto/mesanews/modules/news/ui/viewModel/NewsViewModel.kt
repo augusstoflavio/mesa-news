@@ -27,7 +27,7 @@ class NewsViewModel(
 
     fun favoriteNews(news: News) {
         viewModelScope.launch {
-            newsRepository.favorite(news)
+            newsRepository.changeFavoriteSituation(news)
         }
     }
 
