@@ -6,19 +6,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import br.com.augusto.mesanews.R
 import br.com.augusto.mesanews.app.helper.FotoHelper
 import br.com.augusto.mesanews.modules.news.data.News
 
-class NewsAdapter: RecyclerView.Adapter<NewsAdapter.NewsHolder>() {
-
-    private var news: List<News> = listOf()
-
-    fun update(itens: List<News>) {
-        this.news = itens
-        notifyDataSetChanged()
-    }
+class NewsAdapter: PagedListAdapter<News, NewsAdapter.NewsHolder>() {
 
     class NewsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title: TextView = itemView.findViewById(R.id.title)
@@ -33,7 +27,10 @@ class NewsAdapter: RecyclerView.Adapter<NewsAdapter.NewsHolder>() {
     }
 
     override fun onBindViewHolder(holder: NewsHolder, position: Int) {
-        val news1 = news.get(position)
+        val news1 = getItem(position)
+        if (news1 == null) {
+            return
+        }
         holder.title.text = news1.title
         holder.content.text = news1.content
 
@@ -44,9 +41,5 @@ class NewsAdapter: RecyclerView.Adapter<NewsAdapter.NewsHolder>() {
         } else {
             holder.image.isVisible = false
         }
-    }
-
-    override fun getItemCount(): Int {
-        return news.size
     }
 }

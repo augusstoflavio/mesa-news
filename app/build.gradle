@@ -32,8 +32,8 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.1'
     ext.anko_version = '0.10.8'
     ext.koin_version = '2.0.1'
 
@@ -61,4 +61,6 @@ dependencies {
     implementation 'com.github.nikartm:image-support:1.0.5'
 
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+
+    implementation "androidx.paging:paging-runtime:2.1.2"
 }
