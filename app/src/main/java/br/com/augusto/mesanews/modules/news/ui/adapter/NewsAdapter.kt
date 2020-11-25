@@ -15,7 +15,8 @@ import br.com.augusto.mesanews.app.ui.adapter.OnClickItemAdapterListener
 import br.com.augusto.mesanews.modules.news.data.News
 
 class NewsAdapter(
-    val onClickShared: OnClickItemAdapterListener<News>
+    val onClickShared: OnClickItemAdapterListener<News>,
+    val onClickView: OnClickItemAdapterListener<News>
 ): PagedListAdapter<News, NewsAdapter.NewsHolder>(NewsDiffCallback) {
 
     class NewsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -36,6 +37,18 @@ class NewsAdapter(
 
         holder.title.text = news1.title
         holder.content.text = news1.content
+
+        holder.image.setOnClickListener {
+            onClickView.clickItem(news1)
+        }
+
+        holder.title.setOnClickListener {
+            onClickView.clickItem(news1)
+        }
+
+        holder.content.setOnClickListener {
+            onClickView.clickItem(news1)
+        }
 
         if (news1.imageUrl != null) {
             val fotoHelper = FotoHelper()

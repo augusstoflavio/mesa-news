@@ -1,5 +1,7 @@
 package br.com.augusto.mesanews.modules.main.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
@@ -13,7 +15,8 @@ import br.com.augusto.mesanews.modules.news.ui.viewModel.NewsViewModel
 import kotlinx.android.synthetic.main.activity_home.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class HomeActivity : AppCompatActivity(), OnClickItemAdapterListener<News> {
+
+class HomeActivity : AppCompatActivity() {
 
     val viewModel: NewsViewModel by viewModel()
 
@@ -21,7 +24,20 @@ class HomeActivity : AppCompatActivity(), OnClickItemAdapterListener<News> {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val adapter = NewsAdapter(this)
+
+
+        val adapter = NewsAdapter(
+            object : OnClickItemAdapterListener<News> {
+                override fun clickItem(item: News) {
+                    sharedNews(item)
+                }
+            },
+            object : OnClickItemAdapterListener<News> {
+                override fun clickItem(item: News) {
+                    viewNews(item)
+                }
+            }
+        )
         news.adapter = adapter
         news.layoutManager = LinearLayoutManager(this)
 
@@ -38,12 +54,17 @@ class HomeActivity : AppCompatActivity(), OnClickItemAdapterListener<News> {
         })
     }
 
-    override fun clickItem(item: News) {
+    fun sharedNews(news: News) {
         ShareCompat.IntentBuilder.from(this)
             .setType("text/plain")
-            .setChooserTitle(item.title)
-            .setText(item.url)
-            .setSubject(item.content)
+            .setChooserTitle(news.title)
+            .setText(news.url)
+            .setSubject(news.content)
             .startChooser()
+    }
+
+    fun viewNews(news: News) {
+        val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(news.url))
+        startActivity(intent)
     }
 }
