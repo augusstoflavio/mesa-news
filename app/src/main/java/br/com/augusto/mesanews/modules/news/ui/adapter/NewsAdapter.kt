@@ -75,6 +75,18 @@ class NewsAdapter(
         }
     }
 
+    fun changeFavState(news: News) {
+        currentList?.indexOf(news).let {
+            val position = it
+            if (position != null) {
+                getItem(it)?.let {
+                    it.favorite = !it.favorite
+                    notifyItemChanged(position)
+                }
+            }
+        }
+    }
+
     companion object {
         val NewsDiffCallback = object : DiffUtil.ItemCallback<News>() {
             override fun areItemsTheSame(oldItem: News, newItem: News): Boolean {

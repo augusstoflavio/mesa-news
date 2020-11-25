@@ -1,8 +1,6 @@
 package br.com.augusto.mesanews.modules.main.ui
 
-import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
@@ -20,6 +18,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeActivity : AppCompatActivity() {
 
+    private lateinit var adapterNews: NewsAdapter
     val viewModel: NewsViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +27,7 @@ class HomeActivity : AppCompatActivity() {
 
 
 
-        val adapter = NewsAdapter(
+        adapterNews = NewsAdapter(
             object : OnClickItemAdapterListener<News> {
                 override fun clickItem(item: News) {
                     sharedNews(item)
@@ -45,11 +44,11 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         )
-        news.adapter = adapter
+        news.adapter = adapterNews
         news.layoutManager = LinearLayoutManager(this)
 
         viewModel.news.observe(this, {
-            adapter.submitList(it)
+            adapterNews.submitList(it)
         })
 
         val highlightsAdapter = HighlightsAdapter()
@@ -63,6 +62,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun favoriteNews(item: News) {
         viewModel.favoriteNews(item)
+        adapterNews.changeFavState(item)
     }
 
     fun sharedNews(news: News) {
