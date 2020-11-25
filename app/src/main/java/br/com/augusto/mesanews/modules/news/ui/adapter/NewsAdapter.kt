@@ -11,14 +11,18 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.augusto.mesanews.R
 import br.com.augusto.mesanews.app.helper.FotoHelper
 import br.com.augusto.mesanews.app.helper.isVisible
+import br.com.augusto.mesanews.app.ui.adapter.OnClickItemAdapterListener
 import br.com.augusto.mesanews.modules.news.data.News
 
-class NewsAdapter: PagedListAdapter<News, NewsAdapter.NewsHolder>(NewsDiffCallback) {
+class NewsAdapter(
+    val onClickShared: OnClickItemAdapterListener<News>
+): PagedListAdapter<News, NewsAdapter.NewsHolder>(NewsDiffCallback) {
 
     class NewsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title: TextView = itemView.findViewById(R.id.title)
         var content: TextView = itemView.findViewById(R.id.content)
         var image: ImageView = itemView.findViewById(R.id.image)
+        var sharedButton: ImageView = itemView.findViewById(R.id.shared_button)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsHolder {
@@ -39,6 +43,10 @@ class NewsAdapter: PagedListAdapter<News, NewsAdapter.NewsHolder>(NewsDiffCallba
             holder.image.isVisible(true)
         } else {
             holder.image.isVisible(false)
+        }
+
+        holder.sharedButton.setOnClickListener {
+            onClickShared.clickItem(news1)
         }
     }
 

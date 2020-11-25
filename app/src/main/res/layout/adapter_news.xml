@@ -60,15 +60,14 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/shared_button"
+                        android:id="@+id/favorite_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
-                        android:tint="#C61B1B"
                         app:srcCompat="@drawable/ic_heart" />
 
                     <ImageView
-                        android:id="@+id/favorite_button"
+                        android:id="@+id/shared_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_baseline_share_24" />
