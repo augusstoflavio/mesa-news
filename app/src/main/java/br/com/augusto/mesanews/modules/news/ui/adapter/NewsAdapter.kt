@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +25,7 @@ class NewsAdapter(
         var content: TextView = itemView.findViewById(R.id.content)
         var image: ImageView = itemView.findViewById(R.id.image)
         var sharedButton: ImageView = itemView.findViewById(R.id.shared_button)
+        var favoriteButton: ImageView = itemView.findViewById(R.id.favorite_button)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsHolder {
@@ -60,6 +62,12 @@ class NewsAdapter(
 
         holder.sharedButton.setOnClickListener {
             onClickShared.clickItem(news1)
+        }
+
+        if (news1.favorite) {
+            holder.favoriteButton.setImageResource(R.drawable.ic_heart_red)
+        } else {
+            holder.favoriteButton.setImageResource(R.drawable.ic_heart)
         }
     }
 

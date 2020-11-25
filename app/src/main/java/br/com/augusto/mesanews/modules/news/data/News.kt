@@ -10,5 +10,6 @@ data class News (
     val publishedAt: String,
     val highlight: Boolean,
     val url: String,
-    val imageUrl: String?
+    val imageUrl: String?,
+    val favorite: Boolean
 ): Serializable

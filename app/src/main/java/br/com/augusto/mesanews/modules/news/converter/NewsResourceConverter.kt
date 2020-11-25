@@ -1,5 +1,7 @@
 package br.com.augusto.mesanews.modules.news.converter
 
+import br.com.augusto.mesanews.app.database.Database
+import br.com.augusto.mesanews.modules.news.data.FavoriteNews
 import br.com.augusto.mesanews.modules.news.data.News
 import br.com.augusto.mesanews.modules.news.data.NewsResource
 
@@ -12,6 +14,14 @@ class NewsResourceConverter {
         }
 
         fun toNews(resource: NewsResource): News {
+
+            val realm = Database.getInstance()
+                val favorites = realm.where(FavoriteNews::class.java)
+                            .equalTo("title", resource.title).findAll()
+
+                val favorite = favorites.isNotEmpty()
+            realm.close()
+
             return News(
                 title = resource.title,
                 description = resource.description,
@@ -20,7 +30,8 @@ class NewsResourceConverter {
                 publishedAt = resource.publishedAt,
                 highlight = resource.highlight,
                 url = resource.url,
-                imageUrl = resource.imageUrl
+                imageUrl = resource.imageUrl,
+                favorite = favorite
             )
         }
     }

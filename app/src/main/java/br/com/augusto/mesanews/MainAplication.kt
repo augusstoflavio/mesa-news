@@ -6,6 +6,7 @@ import br.com.augusto.mesanews.app.module.ModuleInterface
 import br.com.augusto.mesanews.modules.auth.AuthModule
 import br.com.augusto.mesanews.modules.main.MainModule
 import br.com.augusto.mesanews.modules.news.NewsModule
+import io.realm.Realm
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -15,6 +16,7 @@ class MainAplication : Application() {
     override fun onCreate() {
         super.onCreate()
         startKoin()
+        Realm.init(this)
     }
 
     private fun startKoin() {
