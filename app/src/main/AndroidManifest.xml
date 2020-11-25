@@ -27,6 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".modules.auth.ui.signup.SigupActivity" />
+        <activity android:name=".modules.news.ui.activity.ShowNewsActivity" />
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package br.com.augusto.mesanews.modules.main.ui
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.augusto.mesanews.R
 import br.com.augusto.mesanews.app.ui.adapter.OnClickItemAdapterListener
 import br.com.augusto.mesanews.modules.news.data.News
+import br.com.augusto.mesanews.modules.news.ui.activity.ShowNewsActivity
 import br.com.augusto.mesanews.modules.news.ui.adapter.HighlightsAdapter
 import br.com.augusto.mesanews.modules.news.ui.adapter.NewsAdapter
 import br.com.augusto.mesanews.modules.news.ui.viewModel.NewsViewModel
@@ -64,7 +66,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     fun viewNews(news: News) {
-        val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(news.url))
+        val intent = Intent(applicationContext, ShowNewsActivity::class.java)
+        intent.putExtra("news", news)
         startActivity(intent)
     }
 }
