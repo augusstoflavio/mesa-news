@@ -38,6 +38,11 @@ class HomeActivity : AppCompatActivity() {
                 override fun clickItem(item: News) {
                     viewNews(item)
                 }
+            },
+            object : OnClickItemAdapterListener<News> {
+                override fun clickItem(item: News) {
+                    favoriteNews(item)
+                }
             }
         )
         news.adapter = adapter
@@ -54,6 +59,10 @@ class HomeActivity : AppCompatActivity() {
         viewModel.highliht.observe(this, {
             highlightsAdapter.update(it)
         })
+    }
+
+    private fun favoriteNews(item: News) {
+        viewModel.favoriteNews(item)
     }
 
     fun sharedNews(news: News) {

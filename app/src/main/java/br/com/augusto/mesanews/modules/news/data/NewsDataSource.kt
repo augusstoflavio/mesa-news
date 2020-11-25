@@ -24,7 +24,6 @@ class NewsDataSource(val newsService: NewsService) : PageKeyedDataSource<Int, Ne
             }
 
             override fun onFailure(call: Call<GetListResponse<List<NewsResource>>>, t: Throwable) {
-                TODO("Not yet implemented")
             }
         })
     }
@@ -39,7 +38,6 @@ class NewsDataSource(val newsService: NewsService) : PageKeyedDataSource<Int, Ne
             }
 
             override fun onFailure(call: Call<GetListResponse<List<NewsResource>>>, t: Throwable) {
-                TODO("Not yet implemented")
             }
         })
     }

@@ -8,7 +8,9 @@ import br.com.augusto.mesanews.modules.news.service.NewsService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import br.com.augusto.mesanews.app.data.Result
+import br.com.augusto.mesanews.app.database.Database
 import br.com.augusto.mesanews.modules.news.converter.NewsResourceConverter
+import br.com.augusto.mesanews.modules.news.data.FavoriteNews
 import br.com.augusto.mesanews.modules.news.data.NewsDataSourceFactory
 
 class NewsRepository(val newsService: NewsService, val newsDataSourceFactory: NewsDataSourceFactory) {
@@ -38,4 +40,33 @@ class NewsRepository(val newsService: NewsService, val newsDataSourceFactory: Ne
             }
         }
     }
+
+    suspend fun favorite(news: News) {
+        return withContext(Dispatchers.IO) {
+            val realm = Database.getInstance()
+            try {
+                realm.beginTransaction()
+
+                val favoriteNews = FavoriteNews()
+                favoriteNews.title = news.title
+                favoriteNews.author = news.author
+                favoriteNews.content = news.content
+                favoriteNews.description = news.description
+                favoriteNews.highlight = news.highlight
+                favoriteNews.imageUrl = news.imageUrl
+                favoriteNews.publishedAt = news.publishedAt
+                favoriteNews.url = news.url
+                realm.copyToRealmOrUpdate(
+                    favoriteNews
+                )
+
+                realm.commitTransaction()
+            } catch (e: Exception) {
+                realm.cancelTransaction()
+            } finally {
+                realm.close()
+            }
+        }
+    }
+
 }

@@ -25,6 +25,12 @@ class NewsViewModel(
         getHighlights()
     }
 
+    fun favoriteNews(news: News) {
+        viewModelScope.launch {
+            newsRepository.favorite(news)
+        }
+    }
+
     private fun getHighlights() {
         viewModelScope.launch {
             val result = newsRepository.getHighlights()

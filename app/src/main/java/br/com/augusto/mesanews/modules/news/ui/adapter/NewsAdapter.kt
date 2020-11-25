@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +16,8 @@ import br.com.augusto.mesanews.modules.news.data.News
 
 class NewsAdapter(
     val onClickShared: OnClickItemAdapterListener<News>,
-    val onClickView: OnClickItemAdapterListener<News>
+    val onClickView: OnClickItemAdapterListener<News>,
+    val onClickFavorite: OnClickItemAdapterListener<News>
 ): PagedListAdapter<News, NewsAdapter.NewsHolder>(NewsDiffCallback) {
 
     class NewsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -62,6 +62,10 @@ class NewsAdapter(
 
         holder.sharedButton.setOnClickListener {
             onClickShared.clickItem(news1)
+        }
+
+        holder.favoriteButton.setOnClickListener {
+            onClickFavorite.clickItem(news1)
         }
 
         if (news1.favorite) {
