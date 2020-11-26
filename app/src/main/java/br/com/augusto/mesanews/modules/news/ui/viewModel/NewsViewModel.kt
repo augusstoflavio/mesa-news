@@ -25,6 +25,7 @@ class NewsViewModel(
 
     fun refresh() {
         getHighlights()
+        newsDataSourceFactory.refresh()
     }
 
     fun getNews(): LiveData<PagedList<News>> {

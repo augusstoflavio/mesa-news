@@ -19,6 +19,7 @@ import br.com.augusto.mesanews.modules.news.ui.adapter.NewsAdapter
 import br.com.augusto.mesanews.modules.news.ui.viewModel.NewsViewModel
 import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.app_bar.*
+import org.jetbrains.anko.support.v4.onRefresh
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -87,6 +88,11 @@ class NewsActivity : AppCompatActivity() {
 
             viewModel.newsFavoriteUpdateResult.value = null
         })
+
+        swipe_news.onRefresh {
+            swipe_news.isRefreshing = false
+            viewModel.refresh()
+        }
     }
 
     private fun favoriteNews(item: News) {
