@@ -7,6 +7,7 @@ import br.com.augusto.mesanews.app.data.resources.GetListResponse
 import br.com.augusto.mesanews.app.database.Database
 import br.com.augusto.mesanews.modules.news.converter.NewsResourceConverter
 import br.com.augusto.mesanews.modules.news.service.NewsService
+import io.realm.Sort
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,7 +29,7 @@ class NewsDataSource(val newsService: NewsService) : PageKeyedDataSource<Int, Ne
             ) {
                 loading.postValue(Result.Success(false))
                 val listNews = convertToList(response.body()!!.data)
-                clearNews()
+                clearNewsNotFavorite()
                 saveNews(listNews)
                 callback.onResult(listNews, null, 2)
             }
@@ -43,16 +44,19 @@ class NewsDataSource(val newsService: NewsService) : PageKeyedDataSource<Int, Ne
     private fun getNews(): MutableList<News> {
         val realm = Database.getInstance()
         val news = realm.copyFromRealm(
-            realm.where(News::class.java).findAll()
+            realm.where(News::class.java).sort("publishedAt", Sort.DESCENDING).findAll()
         )
         realm.close()
         return news ?: mutableListOf()
     }
 
-    private fun clearNews() {
+    private fun clearNewsNotFavorite() {
         val realm = Database.getInstance()
         realm.beginTransaction()
-        realm.delete(News::class.java)
+            realm.where(News::class.java)
+                    .equalTo("favorite", false)
+                    .findAll()
+                    .deleteAllFromRealm()
         realm.commitTransaction()
         realm.close()
     }
