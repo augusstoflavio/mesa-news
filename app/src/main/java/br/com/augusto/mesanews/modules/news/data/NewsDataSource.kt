@@ -98,6 +98,15 @@ class NewsDataSource(val newsService: NewsService) : PageKeyedDataSource<Int, Ne
         val listNews = resources.map {
             val resource = it
 
+            val equivalentNews = realm.where(News::class.java)
+                .equalTo("title", it.title)
+                .findFirst()
+
+            var favorite = false
+            if (equivalentNews != null) {
+                favorite = equivalentNews.favorite
+            }
+
             val news = News()
             news.title = resource.title
             news.description = resource.description
@@ -107,6 +116,7 @@ class NewsDataSource(val newsService: NewsService) : PageKeyedDataSource<Int, Ne
             news.highlight = resource.highlight
             news.url = resource.url
             news.imageUrl = resource.imageUrl
+            news.favorite = favorite
             return@map news
         }
 
