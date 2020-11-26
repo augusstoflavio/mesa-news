@@ -4,7 +4,6 @@ import android.content.Context
 import br.com.augusto.mesanews.app.api.RetrofitFactory
 import br.com.augusto.mesanews.app.data.Preferences
 import br.com.augusto.mesanews.app.module.ModuleAbstract
-import br.com.augusto.mesanews.modules.news.data.FavoriteNews
 import br.com.augusto.mesanews.modules.news.data.NewsDataSourceFactory
 import br.com.augusto.mesanews.modules.news.repository.NewsRepository
 import br.com.augusto.mesanews.modules.news.service.NewsService

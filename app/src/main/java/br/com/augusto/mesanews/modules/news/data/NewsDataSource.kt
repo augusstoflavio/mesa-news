@@ -41,6 +41,29 @@ class NewsDataSource(val newsService: NewsService) : PageKeyedDataSource<Int, Ne
         })
     }
 
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, News>) {
+        loading.postValue(Result.Success(true))
+        newsService.news(params.key).enqueue(object :
+            Callback<GetListResponse<List<NewsResource>>> {
+            override fun onResponse(
+                call: Call<GetListResponse<List<NewsResource>>>,
+                response: Response<GetListResponse<List<NewsResource>>>
+            ) {
+                loading.postValue(Result.Success(false))
+                val listNews = convertToList(response.body()!!.data)
+                saveNews(listNews)
+                callback.onResult(
+                    listNews,
+                    params.key + 1
+                )
+            }
+
+            override fun onFailure(call: Call<GetListResponse<List<NewsResource>>>, t: Throwable) {
+                loading.postValue(Result.Error(Exception("Problema de conexão")))
+            }
+        })
+    }
+
     private fun getNews(): MutableList<News> {
         val realm = Database.getInstance()
         val news = realm.copyFromRealm(
@@ -67,27 +90,6 @@ class NewsDataSource(val newsService: NewsService) : PageKeyedDataSource<Int, Ne
             realm.copyToRealmOrUpdate(listNews)
         realm.commitTransaction()
         realm.close()
-    }
-
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, News>) {
-        loading.postValue(Result.Success(true))
-        newsService.news(params.key).enqueue(object :
-            Callback<GetListResponse<List<NewsResource>>> {
-            override fun onResponse(
-                call: Call<GetListResponse<List<NewsResource>>>,
-                response: Response<GetListResponse<List<NewsResource>>>
-            ) {
-                loading.postValue(Result.Success(false))
-                callback.onResult(
-                    NewsResourceConverter.toList(response.body()!!.data),
-                    params.key + 1
-                )
-            }
-
-            override fun onFailure(call: Call<GetListResponse<List<NewsResource>>>, t: Throwable) {
-                loading.postValue(Result.Error(Exception("Problema de conexão")))
-            }
-        })
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, News>) {

@@ -3,14 +3,25 @@ package br.com.augusto.mesanews.modules.news.repository
 import br.com.augusto.mesanews.app.data.Result
 import br.com.augusto.mesanews.app.database.Database
 import br.com.augusto.mesanews.modules.news.converter.NewsResourceConverter
-import br.com.augusto.mesanews.modules.news.data.FavoriteNews
 import br.com.augusto.mesanews.modules.news.data.News
 import br.com.augusto.mesanews.modules.news.service.NewsService
+import io.realm.Sort
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class NewsRepository(val newsService: NewsService) {
 
+
+    private fun getHighlightsCache(): MutableList<News> {
+        val realm = Database.getInstance()
+        val news = realm.copyFromRealm(
+            realm.where(News::class.java)
+                 .equalTo("highlight", true)
+                 .sort("publishedAt", Sort.DESCENDING).findAll()
+        )
+        realm.close()
+        return news ?: mutableListOf()
+    }
 
     suspend fun getHighlights(): Result<List<News>> {
         return withContext(Dispatchers.IO) {
@@ -23,7 +34,9 @@ class NewsRepository(val newsService: NewsService) {
                     NewsResourceConverter.toList(body?.data!!)
                 )
             } catch (e: Exception) {
-                return@withContext Result.Error(e)
+                return@withContext Result.Success(
+                    getHighlightsCache()
+                )
             }
         }
     }
@@ -34,31 +47,10 @@ class NewsRepository(val newsService: NewsService) {
             try {
                 realm.beginTransaction()
 
-                val favorites = realm.where(FavoriteNews::class.java)
-                    .equalTo("title", news.title).findAll()
-
-                if (favorites.isEmpty()) {
-                    val favoriteNews = FavoriteNews()
-                    favoriteNews.title = news.title
-                    favoriteNews.author = news.author
-                    favoriteNews.content = news.content
-                    favoriteNews.description = news.description
-                    favoriteNews.highlight = news.highlight
-                    favoriteNews.imageUrl = news.imageUrl
-                    favoriteNews.publishedAt = news.publishedAt
-                    favoriteNews.url = news.url
-                    realm.copyToRealmOrUpdate(
-                        favoriteNews
-                    )
-                } else {
-                    favorites.forEach {
-                        it.deleteFromRealm()
-                    }
-                }
+                news.favorite = !news.favorite
+                realm.copyToRealmOrUpdate(news)
 
                 realm.commitTransaction()
-
-                news.favorite = !news.favorite
                 return@withContext Result.Success(news)
             } catch (e: Exception) {
                 realm.cancelTransaction()
@@ -71,20 +63,11 @@ class NewsRepository(val newsService: NewsService) {
 
     fun getFavoriteNews(): List<News>? {
         val realm = Database.getInstance()
-        val news = realm.copyFromRealm(realm.where(FavoriteNews::class.java)
-            .findAll()).map {
-                val news =  News()
-                news.title = it.title!!
-                news.description = it.description!!
-                news.content = it.content!!
-                news.author = it.author!!
-                news.publishedAt = it.publishedAt!!
-                news.highlight = it.highlight!!
-                news.url= it.url!!
-                news.imageUrl = it.imageUrl
-                news.favorite = true
-                return@map news
-        }
+        val news = realm.copyFromRealm(
+            realm.where(News::class.java)
+                .equalTo("favorite", true)
+                .findAll()
+        )
         realm.close()
 
         return news
