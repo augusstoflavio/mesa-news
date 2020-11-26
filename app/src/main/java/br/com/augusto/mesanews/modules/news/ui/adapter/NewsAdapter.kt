@@ -1,20 +1,16 @@
 package br.com.augusto.mesanews.modules.news.ui.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import br.com.augusto.mesanews.R
 import br.com.augusto.mesanews.app.helper.FotoHelper
 import br.com.augusto.mesanews.app.helper.isVisible
-import br.com.augusto.mesanews.app.ui.adapter.OnClickItemAdapterListener
 import br.com.augusto.mesanews.modules.news.data.News
 
 class NewsAdapter(
-    val onClickShared: OnClickItemAdapterListener<News>,
-    val onClickView: OnClickItemAdapterListener<News>,
-    val onClickFavorite: OnClickItemAdapterListener<News>
+    val newsAdapterClickListener: NewsAdapterClickListener
 ): PagedListAdapter<News, NewsHolder>(NewsDiffCallback) {
 
 
@@ -32,15 +28,15 @@ class NewsAdapter(
         holder.content.text = news.content
 
         holder.image.setOnClickListener {
-            onClickView.clickItem(news)
+            newsAdapterClickListener.onOpenClick(news)
         }
 
         holder.title.setOnClickListener {
-            onClickView.clickItem(news)
+            newsAdapterClickListener.onOpenClick(news)
         }
 
         holder.content.setOnClickListener {
-            onClickView.clickItem(news)
+            newsAdapterClickListener.onOpenClick(news)
         }
 
         if (news.imageUrl != null) {
@@ -52,11 +48,11 @@ class NewsAdapter(
         }
 
         holder.sharedButton.setOnClickListener {
-            onClickShared.clickItem(news)
+            newsAdapterClickListener.onSharedClick(news)
         }
 
         holder.favoriteButton.setOnClickListener {
-            onClickFavorite.clickItem(news)
+            newsAdapterClickListener.onFavoriteClick(news)
         }
 
         if (news.favorite) {
@@ -89,4 +85,10 @@ class NewsAdapter(
             }
         }
     }
+}
+
+interface NewsAdapterClickListener {
+    fun onSharedClick(news: News)
+    fun onFavoriteClick(news: News)
+    fun onOpenClick(news: News)
 }
