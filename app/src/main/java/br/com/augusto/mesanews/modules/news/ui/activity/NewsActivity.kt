@@ -75,6 +75,15 @@ class NewsActivity : AppCompatActivity() {
             }
         })
 
+        viewModel.loadingHighlights.observe(this, {
+            if (it is Result.Success) {
+                loading_highlights.isVisible(it.data)
+            } else if (it is Result.Error) {
+                loading_highlights.isVisible(false)
+                toast(it.exception.message.toString())
+            }
+        })
+
         viewModel.newsFavoriteUpdateResult.observe(this, {
             if (it == null) {
                 return@observe

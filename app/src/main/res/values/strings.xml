@@ -33,4 +33,6 @@
     <string name="action_sign_up">Signup</string>
     <string name="prompt_password_confirmation">Password confirmation</string>
     <string name="signup_failed">Sigup failed</string>
+    <string name="highlights">Highlights</string>
+    <string name="news">News</string>
 </resources>

@@ -18,9 +18,10 @@ class NewsViewModel(
     val highliht: MutableLiveData<List<News>> = MutableLiveData(mutableListOf())
     var newsFavoriteUpdateResult: MutableLiveData<Result<News>> = MutableLiveData(null)
     var loadingNews: LiveData<Result<Boolean>> = Transformations.switchMap(newsDataSourceFactory.newsDataSourceLiveData, NewsDataSource::loading)
+    var loadingHighlights: MutableLiveData<Result<Boolean>> = MutableLiveData(null)
 
     init {
-        refresh()
+        getHighlights()
     }
 
     fun refresh() {
@@ -45,10 +46,14 @@ class NewsViewModel(
     }
 
     private fun getHighlights() {
+        loadingHighlights.value = Result.Success(true)
         viewModelScope.launch {
             val result = newsRepository.getHighlights()
             if (result is Result.Success) {
                 highliht.value = result.data
+                loadingHighlights.value = Result.Success(false)
+            } else if (result is Result.Error) {
+                loadingHighlights.value = Result.Error(result.exception)
             }
         }
     }
