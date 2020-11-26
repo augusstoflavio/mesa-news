@@ -57,7 +57,7 @@ class NewsActivity : AppCompatActivity(), NewsAdapterClickListener {
     }
 
     private fun initHighlightsList() {
-        val highlightsAdapter = HighlightsAdapter()
+        val highlightsAdapter = HighlightsAdapter(this)
         highlights.adapter = highlightsAdapter
         highlights.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 

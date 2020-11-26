@@ -11,7 +11,9 @@ import br.com.augusto.mesanews.app.helper.FotoHelper
 import br.com.augusto.mesanews.app.helper.isVisible
 import br.com.augusto.mesanews.modules.news.data.News
 
-class HighlightsAdapter: RecyclerView.Adapter<HighlightsAdapter.HighlightsHolder>() {
+class HighlightsAdapter(
+    var onClickListener: NewsAdapterClickListener
+): RecyclerView.Adapter<HighlightsAdapter.HighlightsHolder>() {
 
     private var itens: List<News> = listOf()
 
@@ -41,6 +43,10 @@ class HighlightsAdapter: RecyclerView.Adapter<HighlightsAdapter.HighlightsHolder
             holder.image.isVisible(true)
         } else {
             holder.image.isVisible(false)
+        }
+
+        holder.title.setOnClickListener {
+            onClickListener.onOpenClick(news)
         }
     }
 
