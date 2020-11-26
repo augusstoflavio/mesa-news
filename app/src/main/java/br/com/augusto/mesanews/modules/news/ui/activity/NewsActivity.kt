@@ -105,6 +105,14 @@ class NewsActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == MENU_FAVORITE) {
+            val intent = Intent(applicationContext, FavoriteNewsActivity::class.java)
+            startActivity(intent)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     companion object {
         private const val MENU_FAVORITE = 1
     }

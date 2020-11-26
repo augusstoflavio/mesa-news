@@ -1,22 +1,26 @@
 package br.com.augusto.mesanews.modules.news.ui.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
-import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import br.com.augusto.mesanews.R
 import br.com.augusto.mesanews.app.helper.FotoHelper
 import br.com.augusto.mesanews.app.helper.isVisible
 import br.com.augusto.mesanews.app.ui.adapter.OnClickItemAdapterListener
 import br.com.augusto.mesanews.modules.news.data.News
 
-class NewsAdapter(
+class FavoriteNewsAdapter(
     val onClickShared: OnClickItemAdapterListener<News>,
     val onClickView: OnClickItemAdapterListener<News>,
     val onClickFavorite: OnClickItemAdapterListener<News>
-): PagedListAdapter<News, NewsHolder>(NewsDiffCallback) {
+): RecyclerView.Adapter<NewsHolder>() {
 
+    private var news: List<News> = listOf()
+
+    fun update(itens: List<News>) {
+        this.news = itens
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsHolder {
         val v = LayoutInflater.from(parent.getContext())
@@ -25,7 +29,7 @@ class NewsAdapter(
     }
 
     override fun onBindViewHolder(holder: NewsHolder, position: Int) {
-        val news = getItem(position) ?: return
+        val news = this.news[position]
 
 
         holder.title.text = news.title
@@ -66,27 +70,7 @@ class NewsAdapter(
         }
     }
 
-    fun changeFavState(news: News) {
-        currentList?.indexOf(news).let {
-            val position = it
-            if (position != null) {
-                getItem(it)?.let {
-                    it.favorite = news.favorite
-                    notifyItemChanged(position)
-                }
-            }
-        }
-    }
-
-    companion object {
-        val NewsDiffCallback = object : DiffUtil.ItemCallback<News>() {
-            override fun areItemsTheSame(oldItem: News, newItem: News): Boolean {
-                return oldItem.title == newItem.title
-            }
-
-            override fun areContentsTheSame(oldItem: News, newItem: News): Boolean {
-                return oldItem == newItem
-            }
-        }
+    override fun getItemCount(): Int {
+        return  this.news.size
     }
 }

@@ -83,4 +83,25 @@ class NewsRepository(val newsService: NewsService, val newsDataSourceFactory: Ne
         }
     }
 
+    fun getFavoriteNews(): List<News>? {
+        val realm = Database.getInstance()
+        val news = realm.copyFromRealm(realm.where(FavoriteNews::class.java)
+            .findAll()).map {
+            News(
+                title = it.title!!,
+                description = it.description!!,
+                content = it.content!!,
+                author = it.author!!,
+                publishedAt = it.publishedAt!!,
+                highlight = it.highlight!!,
+                url= it.url!!,
+                imageUrl = it.imageUrl,
+                favorite = true
+            )
+        }
+        realm.close()
+
+        return news
+    }
+
 }
