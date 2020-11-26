@@ -73,17 +73,17 @@ class NewsRepository(val newsService: NewsService) {
         val realm = Database.getInstance()
         val news = realm.copyFromRealm(realm.where(FavoriteNews::class.java)
             .findAll()).map {
-            News(
-                title = it.title!!,
-                description = it.description!!,
-                content = it.content!!,
-                author = it.author!!,
-                publishedAt = it.publishedAt!!,
-                highlight = it.highlight!!,
-                url= it.url!!,
-                imageUrl = it.imageUrl,
-                favorite = true
-            )
+                val news =  News()
+                news.title = it.title!!
+                news.description = it.description!!
+                news.content = it.content!!
+                news.author = it.author!!
+                news.publishedAt = it.publishedAt!!
+                news.highlight = it.highlight!!
+                news.url= it.url!!
+                news.imageUrl = it.imageUrl
+                news.favorite = true
+                return@map news
         }
         realm.close()
 

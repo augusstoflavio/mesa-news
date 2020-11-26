@@ -22,17 +22,17 @@ class NewsResourceConverter {
                 val favorite = favorites.isNotEmpty()
             realm.close()
 
-            return News(
-                title = resource.title,
-                description = resource.description,
-                content = resource.content,
-                author = resource.author,
-                publishedAt = resource.publishedAt,
-                highlight = resource.highlight,
-                url = resource.url,
-                imageUrl = resource.imageUrl,
-                favorite = favorite
-            )
+            val news = News()
+            news.title = resource.title
+            news.description = resource.description
+            news.content = resource.content
+            news.author = resource.author
+            news.publishedAt = resource.publishedAt
+            news.highlight = resource.highlight
+            news.url = resource.url
+            news.imageUrl = resource.imageUrl
+            news.favorite = favorite
+            return news
         }
     }
 }
