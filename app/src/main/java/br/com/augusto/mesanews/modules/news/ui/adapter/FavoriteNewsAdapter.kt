@@ -6,13 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.augusto.mesanews.R
 import br.com.augusto.mesanews.app.helper.FotoHelper
 import br.com.augusto.mesanews.app.helper.isVisible
-import br.com.augusto.mesanews.app.ui.adapter.OnClickItemAdapterListener
 import br.com.augusto.mesanews.modules.news.data.News
 
 class FavoriteNewsAdapter(
-    val onClickShared: OnClickItemAdapterListener<News>,
-    val onClickView: OnClickItemAdapterListener<News>,
-    val onClickFavorite: OnClickItemAdapterListener<News>
+    val onNewsAdapterClickListener: NewsAdapterClickListener
 ): RecyclerView.Adapter<NewsHolder>() {
 
     private var news: List<News> = listOf()
@@ -36,15 +33,15 @@ class FavoriteNewsAdapter(
         holder.content.text = news.content
 
         holder.image.setOnClickListener {
-            onClickView.clickItem(news)
+            onNewsAdapterClickListener.onOpenClick(news)
         }
 
         holder.title.setOnClickListener {
-            onClickView.clickItem(news)
+            onNewsAdapterClickListener.onOpenClick(news)
         }
 
         holder.content.setOnClickListener {
-            onClickView.clickItem(news)
+            onNewsAdapterClickListener.onOpenClick(news)
         }
 
         if (news.imageUrl != null) {
@@ -56,11 +53,11 @@ class FavoriteNewsAdapter(
         }
 
         holder.sharedButton.setOnClickListener {
-            onClickShared.clickItem(news)
+            onNewsAdapterClickListener.onSharedClick(news)
         }
 
         holder.favoriteButton.setOnClickListener {
-            onClickFavorite.clickItem(news)
+            onNewsAdapterClickListener.onFavoriteClick(news)
         }
 
         if (news.favorite) {

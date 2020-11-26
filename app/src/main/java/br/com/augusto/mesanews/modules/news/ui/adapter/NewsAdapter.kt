@@ -63,15 +63,20 @@ class NewsAdapter(
     }
 
     fun changeFavState(news: News) {
-        currentList?.indexOf(news).let {
-            val position = it
-            if (position != null) {
-                getItem(it)?.let {
-                    it.favorite = news.favorite
-                    notifyItemChanged(position)
+        try {
+            currentList?.indexOf(news).let {
+                val position = it
+                if (position != null) {
+                    getItem(it)?.let {
+                        it.favorite = news.favorite
+                        notifyItemChanged(position)
+                    }
                 }
             }
+        } catch (e: IndexOutOfBoundsException) {
+
         }
+
     }
 
     companion object {

@@ -15,4 +15,23 @@ open class News: RealmObject(), Serializable {
     var url: String? = null
     var imageUrl: String? = null
     var favorite: Boolean = false
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is News) return false
+        val n = other as News?
+        return n!!.title == title
+    }
+
+    override fun hashCode(): Int {
+        var result = title?.hashCode() ?: 0
+        result = 31 * result + (description?.hashCode() ?: 0)
+        result = 31 * result + (content?.hashCode() ?: 0)
+        result = 31 * result + (author?.hashCode() ?: 0)
+        result = 31 * result + (publishedAt?.hashCode() ?: 0)
+        result = 31 * result + (highlight?.hashCode() ?: 0)
+        result = 31 * result + (url?.hashCode() ?: 0)
+        result = 31 * result + (imageUrl?.hashCode() ?: 0)
+        result = 31 * result + favorite.hashCode()
+        return result
+    }
 }

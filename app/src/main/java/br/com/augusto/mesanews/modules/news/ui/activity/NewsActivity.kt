@@ -10,11 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.augusto.mesanews.R
 import br.com.augusto.mesanews.app.data.Result
 import br.com.augusto.mesanews.app.helper.isVisible
+import br.com.augusto.mesanews.app.helper.startDialog
 import br.com.augusto.mesanews.app.helper.toast
 import br.com.augusto.mesanews.modules.news.data.News
 import br.com.augusto.mesanews.modules.news.ui.adapter.HighlightsAdapter
 import br.com.augusto.mesanews.modules.news.ui.adapter.NewsAdapter
 import br.com.augusto.mesanews.modules.news.ui.adapter.NewsAdapterClickListener
+import br.com.augusto.mesanews.modules.news.ui.dialog.FavoriteNewsDialog
 import br.com.augusto.mesanews.modules.news.ui.viewModel.NewsViewModel
 import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.app_bar.*
@@ -113,8 +115,7 @@ class NewsActivity : AppCompatActivity(), NewsAdapterClickListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == MENU_FAVORITE) {
-            val intent = Intent(applicationContext, FavoriteNewsActivity::class.java)
-            startActivity(intent)
+            startDialog(FavoriteNewsDialog())
         }
         return super.onOptionsItemSelected(item)
     }
