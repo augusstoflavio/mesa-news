@@ -11,7 +11,7 @@ import br.com.augusto.mesanews.R
 import br.com.augusto.mesanews.app.helper.afterTextChanged
 import br.com.augusto.mesanews.app.helper.toast
 import br.com.augusto.mesanews.modules.auth.ui.signup.SigupActivity
-import br.com.augusto.mesanews.modules.main.ui.HomeActivity
+import br.com.augusto.mesanews.modules.news.ui.activity.NewsActivity
 import kotlinx.android.synthetic.main.activity_signin.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -46,7 +46,7 @@ class SigninActivity : AppCompatActivity() {
                 toast(loginResult.error)
             }
             if (loginResult.success != null && loginResult.success) {
-                val intent = Intent(applicationContext, HomeActivity::class.java)
+                val intent = Intent(applicationContext, NewsActivity::class.java)
                 startActivity(intent)
                 setResult(Activity.RESULT_OK)
                 finish()

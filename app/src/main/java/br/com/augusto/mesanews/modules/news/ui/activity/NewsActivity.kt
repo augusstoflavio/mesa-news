@@ -1,4 +1,4 @@
-package br.com.augusto.mesanews.modules.main.ui
+package br.com.augusto.mesanews.modules.news.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,26 +8,25 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.augusto.mesanews.R
 import br.com.augusto.mesanews.app.data.Result
 import br.com.augusto.mesanews.app.helper.toast
+import br.com.augusto.mesanews.app.ui.activity.ToolbarActivity
 import br.com.augusto.mesanews.app.ui.adapter.OnClickItemAdapterListener
 import br.com.augusto.mesanews.modules.news.data.News
-import br.com.augusto.mesanews.modules.news.ui.activity.ShowNewsActivity
 import br.com.augusto.mesanews.modules.news.ui.adapter.HighlightsAdapter
 import br.com.augusto.mesanews.modules.news.ui.adapter.NewsAdapter
 import br.com.augusto.mesanews.modules.news.ui.viewModel.NewsViewModel
-import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_news.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class HomeActivity : AppCompatActivity() {
+class NewsActivity : ToolbarActivity() {
 
     private lateinit var adapterNews: NewsAdapter
     val viewModel: NewsViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
-
-
+        setContentView(R.layout.activity_news)
+        setTitle("News")
 
         adapterNews = NewsAdapter(
             object : OnClickItemAdapterListener<News> {
