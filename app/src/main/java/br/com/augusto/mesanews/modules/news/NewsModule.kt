@@ -29,11 +29,11 @@ class NewsModule: ModuleAbstract() {
             }
 
             single {
-                NewsRepository(get(), get())
+                NewsRepository(get())
             }
 
             viewModel {
-                NewsViewModel(get())
+                NewsViewModel(get(), get())
             }
 
             viewModel {

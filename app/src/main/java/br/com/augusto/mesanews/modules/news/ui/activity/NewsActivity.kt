@@ -6,9 +6,11 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.augusto.mesanews.R
 import br.com.augusto.mesanews.app.data.Result
+import br.com.augusto.mesanews.app.helper.isVisible
 import br.com.augusto.mesanews.app.helper.toast
 import br.com.augusto.mesanews.app.ui.adapter.OnClickItemAdapterListener
 import br.com.augusto.mesanews.modules.news.data.News
@@ -51,7 +53,7 @@ class NewsActivity : AppCompatActivity() {
         news.adapter = adapterNews
         news.layoutManager = LinearLayoutManager(this)
 
-        viewModel.news.observe(this, {
+        viewModel.getNews().observe(this, {
             adapterNews.submitList(it)
         })
 
@@ -61,6 +63,15 @@ class NewsActivity : AppCompatActivity() {
 
         viewModel.highliht.observe(this, {
             highlightsAdapter.update(it)
+        })
+
+        viewModel.loadingNews.observe(this, {
+            if (it is Result.Success) {
+                loading_news.isVisible(it.data)
+            } else if (it is Result.Error) {
+                loading_news.isVisible(false)
+                toast(it.exception.message.toString())
+            }
         })
 
         viewModel.newsFavoriteUpdateResult.observe(this, {
