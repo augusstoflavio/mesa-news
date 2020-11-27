@@ -11,7 +11,7 @@ import br.com.augusto.mesanews.app.ui.WebViewProgressClient
 import br.com.augusto.mesanews.app.ui.activity.ToolbarActivity
 import br.com.augusto.mesanews.modules.news.data.News
 import br.com.augusto.mesanews.modules.news.ui.viewModel.ShowNewsViewModel
-import kotlinx.android.synthetic.main.activity_show_news.*
+import kotlinx.android.synthetic.main.dialog_view_news.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class ShowNewsActivity: ToolbarActivity() {
@@ -22,7 +22,7 @@ class ShowNewsActivity: ToolbarActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_show_news)
+        setContentView(R.layout.dialog_view_news)
 
 
         val extras = intent.extras

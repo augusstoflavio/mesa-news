@@ -14,10 +14,6 @@ class FavoriteNewsViewModel(
 
     var favoriteNews = MutableLiveData(listOf<News>())
 
-    init {
-        getFavoriteNews()
-    }
-
     fun getFavoriteNews() {
         favoriteNews.value = newsRepository.getFavoriteNews()
     }

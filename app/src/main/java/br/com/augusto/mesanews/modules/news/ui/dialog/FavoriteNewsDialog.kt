@@ -34,6 +34,11 @@ class FavoriteNewsDialog: FullScreenDialog() {
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        favoriteNewsViewModel.getFavoriteNews()
+    }
+
     override fun getDialogTitle(): String {
         return "Favorite news"
     }

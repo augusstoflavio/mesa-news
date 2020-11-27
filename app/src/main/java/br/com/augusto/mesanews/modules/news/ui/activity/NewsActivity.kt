@@ -17,6 +17,7 @@ import br.com.augusto.mesanews.modules.news.ui.adapter.HighlightsAdapter
 import br.com.augusto.mesanews.modules.news.ui.adapter.NewsAdapter
 import br.com.augusto.mesanews.modules.news.ui.adapter.NewsAdapterClickListener
 import br.com.augusto.mesanews.modules.news.ui.dialog.FavoriteNewsDialog
+import br.com.augusto.mesanews.modules.news.ui.dialog.ViewNewsDialog
 import br.com.augusto.mesanews.modules.news.ui.viewModel.NewsViewModel
 import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.app_bar.*
@@ -54,7 +55,7 @@ class NewsActivity : AppCompatActivity(), NewsAdapterClickListener {
                 toast(it.exception.message!!)
             }
 
-            viewModel.newsFavoriteUpdateResult.value = null
+//            viewModel.newsFavoriteUpdateResult.value = null
         })
     }
 
@@ -138,8 +139,13 @@ class NewsActivity : AppCompatActivity(), NewsAdapterClickListener {
     }
 
     override fun onOpenClick(news: News) {
-        val intent = Intent(applicationContext, ShowNewsActivity::class.java)
-        intent.putExtra("news", news)
-        startActivity(intent)
+        val bundle = Bundle()
+        bundle.putSerializable("news", news)
+
+        val viewNewsDialog = ViewNewsDialog()
+        viewNewsDialog.arguments = bundle
+
+
+        startDialog(viewNewsDialog)
     }
 }

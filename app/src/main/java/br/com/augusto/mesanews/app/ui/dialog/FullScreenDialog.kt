@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.DialogFragment
 import br.com.augusto.mesanews.R
@@ -11,7 +12,7 @@ import kotlinx.android.synthetic.main.layout_full_screen_dialog.*
 
 abstract class FullScreenDialog: DialogFragment() {
 
-    private lateinit var toolbar: Toolbar
+    protected lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +36,7 @@ abstract class FullScreenDialog: DialogFragment() {
         toolbar.setNavigationOnClickListener { view1 ->dialog?.dismiss() }
         toolbar.title = getDialogTitle()
 
+
         return view
     }
 
@@ -43,6 +45,10 @@ abstract class FullScreenDialog: DialogFragment() {
         inflate.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         content.addView(inflate)
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    fun setTitle(title: String) {
+        toolbar.title = title
     }
 
     abstract fun getDialogTitle(): String
