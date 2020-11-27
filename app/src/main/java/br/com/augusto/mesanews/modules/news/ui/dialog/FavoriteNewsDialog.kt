@@ -2,14 +2,13 @@ package br.com.augusto.mesanews.modules.news.ui.dialog
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.augusto.mesanews.R
+import br.com.augusto.mesanews.app.ui.dialog.FullScreenDialog
 import br.com.augusto.mesanews.modules.news.ui.adapter.FavoriteNewsAdapter
 import br.com.augusto.mesanews.modules.news.ui.adapter.NewsAdapterClickListener
 import br.com.augusto.mesanews.modules.news.ui.viewModel.FavoriteNewsViewModel
 import br.com.augusto.mesanews.modules.news.ui.viewModel.NewsViewModel
-import br.com.marata.rastreamento.app.ui.dialog.FullScreenDialog
 import kotlinx.android.synthetic.main.activity_favorite_news.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel

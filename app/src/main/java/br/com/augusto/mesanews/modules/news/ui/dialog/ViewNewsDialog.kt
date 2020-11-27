@@ -2,14 +2,13 @@ package br.com.augusto.mesanews.modules.news.ui.dialog
 
 import android.os.Bundle
 import android.view.*
-import androidx.lifecycle.Observer
 import br.com.augusto.mesanews.R
 import br.com.augusto.mesanews.app.data.Result
 import br.com.augusto.mesanews.app.ui.WebViewProgressClient
+import br.com.augusto.mesanews.app.ui.dialog.FullScreenDialog
 import br.com.augusto.mesanews.modules.news.data.News
 import br.com.augusto.mesanews.modules.news.ui.activity.NewsActivity
 import br.com.augusto.mesanews.modules.news.ui.viewModel.NewsViewModel
-import br.com.marata.rastreamento.app.ui.dialog.FullScreenDialog
 import kotlinx.android.synthetic.main.dialog_view_news.*
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 

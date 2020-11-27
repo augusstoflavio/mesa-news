@@ -3,9 +3,8 @@ package br.com.augusto.mesanews.modules.news.data
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import br.com.augusto.mesanews.app.data.Result
-import br.com.augusto.mesanews.app.data.resources.GetListResponse
+import br.com.augusto.mesanews.app.data.resources.ResponseResource
 import br.com.augusto.mesanews.app.database.Database
-import br.com.augusto.mesanews.modules.news.converter.NewsResourceConverter
 import br.com.augusto.mesanews.modules.news.service.NewsService
 import io.realm.Sort
 import retrofit2.Call
@@ -22,19 +21,19 @@ class NewsDataSource(val newsService: NewsService) : PageKeyedDataSource<Int, Ne
         callback: LoadInitialCallback<Int, News>
     ) {
         loading.postValue(Result.Success(true))
-        newsService.news(1).enqueue(object : Callback<GetListResponse<List<NewsResource>>> {
+        newsService.news(1).enqueue(object : Callback<br.com.augusto.mesanews.app.data.resources.ResponseResource<List<NewsResource>>> {
             override fun onResponse(
-                call: Call<GetListResponse<List<NewsResource>>>,
-                response: Response<GetListResponse<List<NewsResource>>>
+                call: Call<br.com.augusto.mesanews.app.data.resources.ResponseResource<List<NewsResource>>>,
+                responseResource: Response<br.com.augusto.mesanews.app.data.resources.ResponseResource<List<NewsResource>>>
             ) {
                 loading.postValue(Result.Success(false))
-                val listNews = convertToList(response.body()!!.data)
+                val listNews = convertToList(responseResource.body()!!.data)
                 clearNewsNotFavorite()
                 saveNews(listNews)
                 callback.onResult(listNews, null, 2)
             }
 
-            override fun onFailure(call: Call<GetListResponse<List<NewsResource>>>, t: Throwable) {
+            override fun onFailure(call: Call<br.com.augusto.mesanews.app.data.resources.ResponseResource<List<NewsResource>>>, t: Throwable) {
                 loading.postValue(Result.Error(Exception("Problema de conexão")))
                 callback.onResult(getNews(), null, 2)
             }
@@ -44,13 +43,13 @@ class NewsDataSource(val newsService: NewsService) : PageKeyedDataSource<Int, Ne
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, News>) {
         loading.postValue(Result.Success(true))
         newsService.news(params.key).enqueue(object :
-            Callback<GetListResponse<List<NewsResource>>> {
+            Callback<br.com.augusto.mesanews.app.data.resources.ResponseResource<List<NewsResource>>> {
             override fun onResponse(
-                call: Call<GetListResponse<List<NewsResource>>>,
-                response: Response<GetListResponse<List<NewsResource>>>
+                call: Call<br.com.augusto.mesanews.app.data.resources.ResponseResource<List<NewsResource>>>,
+                responseResource: Response<ResponseResource<List<NewsResource>>>
             ) {
                 loading.postValue(Result.Success(false))
-                val listNews = convertToList(response.body()!!.data)
+                val listNews = convertToList(responseResource.body()!!.data)
                 saveNews(listNews)
                 callback.onResult(
                     listNews,
@@ -58,7 +57,7 @@ class NewsDataSource(val newsService: NewsService) : PageKeyedDataSource<Int, Ne
                 )
             }
 
-            override fun onFailure(call: Call<GetListResponse<List<NewsResource>>>, t: Throwable) {
+            override fun onFailure(call: Call<br.com.augusto.mesanews.app.data.resources.ResponseResource<List<NewsResource>>>, t: Throwable) {
                 loading.postValue(Result.Error(Exception("Problema de conexão")))
             }
         })

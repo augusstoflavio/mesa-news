@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".modules.news.ui.activity.NewsActivity"
-            android:label="@string/title_activity_home"
+            android:label="@string/news"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".modules.auth.ui.signin.SigninActivity"
@@ -27,7 +27,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".modules.auth.ui.signup.SigupActivity" />
-        <activity android:name=".modules.news.ui.activity.ShowNewsActivity" />
     </application>
 
 </manifest>

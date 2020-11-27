@@ -17,13 +17,4 @@ class FavoriteNewsViewModel(
     fun getFavoriteNews() {
         favoriteNews.value = newsRepository.getFavoriteNews()
     }
-
-    fun favoriteNews(news: News) {
-        viewModelScope.launch {
-            val result = newsRepository.changeFavoriteSituation(news)
-            if (result is Result.Success) {
-                getFavoriteNews()
-            }
-        }
-    }
 }

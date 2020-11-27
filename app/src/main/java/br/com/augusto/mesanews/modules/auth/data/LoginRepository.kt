@@ -1,6 +1,5 @@
 package br.com.augusto.mesanews.modules.auth.data
 
-import br.com.augusto.mesanews.app.data.enum.PreferenceEnum
 import br.com.augusto.mesanews.app.data.Preferences
 import br.com.augusto.mesanews.app.data.Result
 import kotlinx.coroutines.Dispatchers
@@ -42,15 +41,5 @@ class LoginRepository(val dataSource: LoginDataSource, val preferences: Preferen
     ) {
         preferences.putEmail(email)
         preferences.putAccessToken(token)
-    }
-
-    suspend fun getLoggedIn(): String? {
-        return withContext(Dispatchers.IO) {
-            return@withContext preferences.getString(PreferenceEnum.EMAIL.name)!!
-        }
-    }
-
-    private fun clearPreferences() {
-        preferences.clear()
     }
 }

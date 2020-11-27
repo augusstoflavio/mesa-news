@@ -36,27 +36,8 @@ class Preferences(private val context: Context) {
         return preferences.getString(name, "")
     }
 
-    fun putLong(name: String?, value: Long?) {
-        val edit = preferences.edit()
-        edit.putLong(name, value!!)
-        edit.apply()
-    }
-
-    fun getLong(name: String): Long? {
-        if (!this.has(name)) {
-            return null
-        }
-        return preferences.getLong(name, 0)
-    }
-
     fun has(name: String?): Boolean {
         return preferences.contains(name)
-    }
-
-    fun remove(name: String?) {
-        val edit = preferences.edit()
-        edit.remove(name)
-        edit.apply()
     }
 
     fun clear() {

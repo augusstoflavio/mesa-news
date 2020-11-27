@@ -9,9 +9,6 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
 
 fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
@@ -43,23 +40,8 @@ fun View.isVisible(visible: Boolean) {
     }
 }
 
-fun <T> Any.toJson(type: Class<T>): String {
-    val moshi = Moshi.Builder().build()
-    val jsonAdapter: JsonAdapter<T> = moshi.adapter(type)
-    return jsonAdapter.toJson(this as T)
-}
-
 fun AppCompatActivity.startDialog(dialogFragment: DialogFragment) {
     val fm = supportFragmentManager
     val yourDialog = dialogFragment
     yourDialog.show(fm, "dialog")
-}
-
-fun Fragment.startDialog(dialogFragment: DialogFragment) {
-    val fm = activity?.supportFragmentManager
-    val yourDialog = dialogFragment
-    yourDialog.setTargetFragment(this, 2121)
-    if (fm != null) {
-        yourDialog.show(fm, "dialog")
-    }
 }

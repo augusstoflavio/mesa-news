@@ -8,15 +8,6 @@ import java.util.*
 
 class FotoHelper {
 
-    fun load(url: String?, image: ImageView?) {
-        var dir = url
-        if (dir == null) {
-            dir = ""
-        }
-        dir = getUrl(dir)
-        getPlaceholder(dir).into(image)
-    }
-
     fun load(url: String?, image: ImageView?, width: Int, height: Int) {
         var dir = url
         if (dir == null) {
@@ -37,21 +28,6 @@ class FotoHelper {
             .load(url)
             .error(R.drawable.imagem_default_error)
             .placeholder(R.drawable.default_image)
-    }
-
-    fun load(
-        url: String?,
-        image: ImageView?,
-        width: Int,
-        height: Int,
-        callback: com.squareup.picasso.Callback?
-    ) {
-        var dir = url
-        if (dir == null) {
-            dir = ""
-        }
-        dir = getUrl(dir)
-        getRequestCreator(dir, width, height).into(image, callback)
     }
 
     private fun getUrl(url: String): String {

@@ -1,10 +1,9 @@
-package br.com.marata.rastreamento.app.ui.dialog
+package br.com.augusto.mesanews.app.ui.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.DialogFragment
 import br.com.augusto.mesanews.R
