@@ -26,7 +26,7 @@ class NewsRepository(val newsService: NewsService) {
     suspend fun getHighlights(): Result<List<News>> {
         return withContext(Dispatchers.IO) {
             try {
-                val result = newsService.highlights().execute()
+                val result = newsService.highlights()
 
                 val body = result.body()
 
